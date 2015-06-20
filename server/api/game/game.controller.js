@@ -3,21 +3,39 @@
 var _ = require('lodash');
 var Game = require('./game.model');
 
+function populateGame (query) {
+  return query
+    .populate('gm', 'name email')
+    .populate('players', 'name email')
+    .populate('created_by', 'name email');
+}
+
 // Get list of games
 exports.index = function (req, res) {
-  Game.find(function (err, games) {
-    if (err) { return handleError(res, err); }
-    return res.json(200, games);
-  });
+  var promise = populateGame(Game.find()).exec();
+
+  promise
+    .then(function (games) {
+      res.json(200, games);
+    }, function (err) {
+      handleError(res, err);
+    });
 };
 
 // Get a single game
 exports.show = function (req, res) {
-  Game.findById(req.params.id, function (err, game) {
-    if (err) { return handleError(res, err); }
-    if (!game) { return res.send(404); }
-    return res.json(game);
-  });
+  var promise = populateGame(Game.findById(req.params.id)).exec();
+
+  promise
+    .then(function (game) {
+      if (!game) {
+        res.send(404);
+      } else {
+        res.json(200, game);
+      }
+    }, function (err) {
+      handleError(res, err);
+    });
 };
 
 // Creates a new game in the DB.
@@ -28,14 +46,20 @@ exports.create = function (req, res) {
   _.extend(game, {
     active: true,
     created_at: now,
-    created_by: req.user.id,
-    modified_at: now
+    created_by: req.user._id,
+    gm: req.user._id,
+    modified_at: now,
+    players: []
   });
 
-  Game.create(game, function (err, game) {
-    if (err) { return handleError(res, err); }
-    return res.json(201, game);
-  });
+  var promise = Game.create(game);
+
+  promise
+    .then(function (game) {
+      res.json(201, game);
+    }, function (err) {
+      return handleError(res, err);
+    }).end();
 };
 
 // Updates an existing game in the DB.
