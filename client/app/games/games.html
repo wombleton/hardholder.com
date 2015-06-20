@@ -1,0 +1,14 @@
+<div>{{games}}</div>
+<form name="newGame" class="form">
+  <div class="form-group">
+    <label>Add New Game</label>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Game name" ng-model="name" required/>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="addGame()" ng-disabled="newGame.$invalid">
+          <i class="fa fa-plus"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
