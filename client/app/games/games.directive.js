@@ -26,7 +26,7 @@ angular
           $http.post('/api/games', {
             name: scope.newGame.name
           });
-          scope.name = '';
+          scope.newGame.name = '';
         };
       },
       templateUrl: 'app/games/games.html'
