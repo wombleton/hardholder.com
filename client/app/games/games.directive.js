@@ -3,10 +3,12 @@
 
 angular
   .module('hardholderApp')
-  .directive('games', function ($http, socket) {
+  .directive('games', function ($http, socket, Auth) {
     return {
       restrict: 'E',
-      link: function (scope, el) {
+      scope: true,
+      link: function (scope, el, attr, form) {
+        scope.isLoggedIn = Auth.isLoggedIn;
         $http.get('/api/games')
           .success(function (games) {
             scope.games = games;
@@ -22,10 +24,9 @@ angular
             return;
           }
           $http.post('/api/games', {
-            name: scope.name
+            name: scope.newGame.name
           });
           scope.name = '';
-          el[0].blur();
         };
       },
       templateUrl: 'app/games/games.html'
