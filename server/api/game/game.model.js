@@ -1,12 +1,15 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var GameSchema = new Schema({
-  name: String,
+  active: Boolean,
+  created_at: Date,
+  created_by: String,
+  modified_at: Date,
   info: String,
-  active: Boolean
+  name: String
 });
 
 module.exports = mongoose.model('Game', GameSchema);
