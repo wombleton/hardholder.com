@@ -1,0 +1,27 @@
+<form name="$parent.newGame" class="form" ng-if="isLoggedIn()">
+  <div class="form-group">
+    <label>Add New Game</label>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Game name" ng-model="newGame.name" required/>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="addGame()" ng-disabled="$parent.newGame.$invalid">
+          <i class="fa fa-plus"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
+<div class="panel panel-default" ui-sref="show-game({ id: game._id })" ng-repeat="game in games | orderBy:'-modified_at' track by game._id">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-sm-8">
+        {{game.name}}
+      </div>
+      <div class="col-sm-4">
+        <div class="label label-info">
+          {{game.gm.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
