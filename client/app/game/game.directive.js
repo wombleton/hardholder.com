@@ -19,14 +19,14 @@ angular.module('hardholderApp')
           };
         }
 
-        socket.socket.on('room::update', function (data) {
-          scope.users = data && data.users;
+        socket.socket.on('room:users', function (users) {
+          scope.users = users;
         });
 
-        socket.socket.emit('room::join', getUserData());
+        socket.socket.emit('room:join', getUserData());
 
         scope.$on('$destroy', function () {
-          socket.socket.emit('room::leave');
+          socket.socket.emit('room:leave');
         });
       }
     };
