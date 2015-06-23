@@ -1,0 +1,5 @@
+<ul class="list-unstyled">
+  <li ng-repeat="user in users | orderBy:'userName' track by user.userId">
+    {{user.userName}}
+  </li>
+</ul>
