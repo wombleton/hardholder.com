@@ -78,10 +78,12 @@ function onSave (socket, doc, cb) {
   });
 
   promise.then(function (game) {
-    socket.emit('game:save', doc);
+    socket.emit('game:save', game);
+    socket.broadcast.to(game._id).emit('game:update', game);
   });
 }
 
 function onRemove (socket, doc, cb) {
   socket.emit('game:remove', doc);
+  socket.broadcast.to(doc._id).emit('game:destroyed');
 }
