@@ -15,6 +15,62 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     padding: 0.2em 0;
 }
 
+.grid {
+  @extend .panel;
+
+  &.grid-default {
+    .grid-heading {
+      border-bottom-color: $brand-primary;
+    }
+  }
+}
+
+
+.grid-heading {
+  border-bottom: 1px solid transparent;
+  @include border-top-radius(($panel-border-radius - 1));
+
+  .grid-row {
+    align-items: center;
+  }
+}
+
+.grid-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+[class^="grid-col"] {
+  flex: 0 1 auto;
+  display: inline-block;
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.grid-col-stretch {
+  flex-grow: 1;
+}
+
+@mixin make-grid-col($class) {
+  @for $i from 1 through 12 {
+    .grid-col-#{$class}-#{$i} {
+      flex-basis: percentage(($i / 12));
+      max-width: percentage(($i / 12));
+    }
+  }
+}
+
+@include make-grid-col(xs);
+@media (min-width: $screen-sm-min) {
+  @include make-grid-col(sm);
+}
+@media (min-width: $screen-md-min) {
+  @include make-grid-col(md);
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'account/login/login.scss';
@@ -22,4 +78,5 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'game-users/game-users.scss';
 @import 'game/game.scss';
 @import 'main/main.scss';
+@import 'roller/roller.scss';
 // endinjector
