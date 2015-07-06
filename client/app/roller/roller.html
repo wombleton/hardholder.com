@@ -1,0 +1,82 @@
+<form class="form" name="form" ng-if="building">
+  <div class="grid-row">
+    <div class="grid-col-xs-3">
+      <label>Skill</label>
+      <div>
+        <div class="btn-group">
+          <button class="btn btn-default" ng-click="roll.skill = roll.skill - 1" ng-disabled="roll.skill <= 1">
+            <i class="fa fa-minus"></i>
+          </button>
+          <button class="btn btn-default" disabled>
+            {{roll.skill}}
+          </button>
+          <button class="btn btn-default" ng-click="roll.skill = roll.skill + 1" ng-disabled="roll.skill >= 10">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="grid-col-xs-3">
+      <label>Trait</label>
+      <div>
+        <div class="btn-group">
+          <button class="btn btn-default" ng-click="roll.trait = roll.trait === -1 ? 0 : -1" ng-class="{ active: roll.trait < 0 }">
+            <i class="fa fa-minus"></i>
+          </button>
+          <button class="btn btn-default" disabled>
+            {{roll.trait}}
+          </button>
+          <button class="btn btn-default" ng-click="roll.trait = roll.trait === 1 ? 0 : 1 " ng-class="{ active: roll.trait > 0 }">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="grid-col-xs-3">
+      <label>Persona</label>
+      <div>
+        <div class="btn-group">
+          <button class="btn btn-default" ng-click="roll.persona = roll.persona - 1" ng-disabled="roll.persona === 0">
+            <i class="fa fa-minus"></i>
+          </button>
+          <button class="btn btn-default" disabled>
+            {{roll.persona}}
+          </button>
+          <button class="btn btn-default" ng-click="roll.persona = roll.persona + 1" ng-disabled="roll.persona >= 3">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="grid-col-xs-3">
+      <label>Extras</label>
+      <div>
+        <div class="btn-group">
+          <button class="btn btn-default" ng-click="roll.extras = roll.extras - 1" ng-disabled="roll.extras <= -3">
+            <i class="fa fa-minus"></i>
+          </button>
+          <button class="btn btn-default" disabled>
+            {{roll.extras}}
+          </button>
+          <button class="btn btn-default" ng-click="roll.extras = roll.extras + 1" ng-disabled="roll.extras >= 3">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-row">
+    <div class="grid-col-stretch">
+      <button class="btn btn-default btn-block" ng-click="roll()">
+        Roll {{total}} Dice
+      </button>
+    </div>
+  </div>
+</form>
+<div class="grid-row grid-row-center" ng-if="!building">
+  <div class="grid-col-stretch">
+    <button class="btn btn-default btn-block" ng-click="makeRoll()">
+      Make Roll
+    </button>
+  </div>
+</div>
