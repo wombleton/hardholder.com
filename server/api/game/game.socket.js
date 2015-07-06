@@ -33,6 +33,17 @@ function joinRoom (socket, user) {
   socket.join(roomId, function () {
     socket.emit('room:users', room.users);
     socket.broadcast.to(roomId).emit('room:users', room.users);
+
+    var promise = Game
+      .findById(roomId)
+      .populate({
+        path: 'created_by gm players',
+        select: 'name email'
+      }).exec();
+
+    promise.then(function (game) {
+      socket.emit('game:update', game);
+    });
   });
 }
 

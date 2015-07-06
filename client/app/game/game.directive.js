@@ -19,6 +19,9 @@ angular.module('hardholderApp')
           };
         }
 
+        socket.socket.on('game:update', function (game) {
+          scope.game = game;
+        });
         socket.socket.on('room:users', function (users) {
           scope.users = users;
         });
